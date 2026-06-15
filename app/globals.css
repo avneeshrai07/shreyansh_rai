@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Tailwind CSS v4 — CSS-first configuration.
+  This @theme block replaces the tailwind.config.ts described in the plan
+  (Tailwind v4 does not load a JS config by default). Every design token
+  from HARD_FOCUS_RULES T2 is preserved here with identical utility names:
+  bg-brand-gold, text-text-primary, font-serif, etc.
+*/
+@theme {
+  /* Brand — amber-gold accent */
+  --color-brand-gold: #92400e;
+  --color-brand-gold-light: #d97706;
+  --color-brand-gold-faint: #fef3c7;
+
+  /* Surfaces */
+  --color-surface-base: #ffffff;
+  --color-surface-soft: #f8fafc;
+  --color-surface-muted: #f1f5f9;
+
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
 }
 
+/* Fonts reference the next/font CSS variables set on <html>. `inline` so the
+   font-serif / font-sans utilities resolve the variables directly. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Prevent horizontal overflow (HARD_FOCUS_RULES M8) */
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Better default focus for keyboard users */
+  :focus-visible {
+    outline: 2px solid #92400e; /* brand-gold */
+    outline-offset: 2px;
+  }
+
+  button {
+    cursor: pointer;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Animation utilities — referenced by Hero and other sections.
+   Defined as plain classes (not Tailwind-generated) so the initial
+   opacity:0 state holds during the staggered animation-delay. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+  opacity: 0;
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-fade-up {
+    animation: none;
+    opacity: 1;
+  }
 }
