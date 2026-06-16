@@ -20,9 +20,9 @@ export const en = {
       "Shreyansh Rai — Criminal Law Advocate | High Court Allahabad & Lucknow",
   },
   stats: [
-    { value: "500+", label: "Cases Handled" },
-    { value: "8+", label: "Years of Practice" },
-    { value: "High Court", label: "Primary Court" },
+    { value: "200+", label: "Cases Handled" },
+    { value: "4+", label: "Years of Practice" },
+    { value: "High Court & Session Court", label: "Primary Court" },
   ],
   practiceAreas: {
     label: "Areas of Expertise",

@@ -639,8 +639,8 @@ export const en = {
     cta2: 'View Case Results',
   },
   stats: [
-    { value: '500+', label: 'Cases Handled' },
-    { value: '8+', label: 'Years of Practice' },
+    { value: '200+', label: 'Cases Handled' },
+    { value: '4+', label: 'Years of Practice' },
     { value: 'High Court', label: 'Primary Court' },
   ],
   practiceAreas: {
@@ -950,12 +950,12 @@ Mobile: 3 items stacked vertically
 Desktop: 3 items in a row (grid-cols-3)
 
 Each stat:
-  [500+]              ← text-3xl font-serif font-bold text-brand-gold-light
+  [200+]              ← text-3xl font-serif font-bold text-brand-gold-light
   Cases Handled       ← text-sm font-sans text-slate-400 uppercase tracking-wider mt-1
 
 Stats data (from en/hi.ts):
-  500+  → Cases Handled
-  8+    → Years of Practice
+  200+  → Cases Handled
+  4+    → Years of Practice
   High Court → Primary Court
 ```
 
