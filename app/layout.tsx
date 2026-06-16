@@ -5,8 +5,6 @@ import {
   LanguageProvider,
   LangAttributeSync,
 } from "@/context/LanguageContext";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -101,15 +99,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col overflow-x-hidden font-sans bg-surface-base text-text-primary">
         <LanguageProvider>
           <LangAttributeSync />
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:bg-brand-gold focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:font-sans focus:text-sm focus:font-medium"
-          >
-            Skip to main content
-          </a>
-          <Navbar />
-          <div className="flex-1">{children}</div>
-          <Footer />
+          {children}
         </LanguageProvider>
       </body>
     </html>

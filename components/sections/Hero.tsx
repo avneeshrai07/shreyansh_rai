@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useContent } from "@/lib/content";
 import { CredentialBadge } from "@/components/ui/CredentialBadge";
@@ -83,8 +84,15 @@ export function Hero() {
           {/* Divider only on mobile, above the photo */}
           <hr className="md:hidden mb-6 border-slate-200" />
 
-          {/* Styled placeholder until a real portrait is provided (§11.4) */}
           <div className="relative w-full aspect-[4/5] rounded-lg bg-slate-200 overflow-hidden">
+            <Image
+              src="/shreyansh_rai_image.png"
+              alt={`${c.hero.name} — ${c.hero.designation}`}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-top"
+            />
             <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 p-4">
               <div
                 className="size-10 rounded-full bg-white/90 backdrop-blur-sm"

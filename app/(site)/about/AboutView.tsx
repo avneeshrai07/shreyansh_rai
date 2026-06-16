@@ -6,7 +6,6 @@ import { PortableText } from "@portabletext/react";
 import { Check } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { useContent } from "@/lib/content";
-import { urlFor } from "@/lib/sanity/client";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { AboutData } from "@/lib/sanity/queries";
@@ -46,31 +45,24 @@ export function AboutView({ about }: { about: AboutData }) {
           <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-12">
             {/* Photo */}
             <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-slate-200">
-              {about.photo ? (
-                <Image
-                  src={urlFor(about.photo).width(600).height(800).url()}
-                  alt={`Advocate ${about.fullName ?? "Shreyansh Rai"} — Criminal Lawyer at High Court Lucknow`}
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  priority
-                />
-              ) : (
-                <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 p-4">
-                  <div
-                    className="size-10 rounded-full bg-white/90"
-                    aria-hidden="true"
-                  />
-                  <div className="rounded-md bg-white/90 px-3 py-2">
-                    <p className="font-serif text-sm text-text-primary leading-none">
-                      {about.fullName ?? "Shreyansh Rai"}
-                    </p>
-                    <p className="mt-1 font-sans text-xs text-text-muted leading-none">
-                      {designation}
-                    </p>
-                  </div>
+              <Image
+                src="/shreyansh_rai_image.png"
+                alt={`Advocate ${about.fullName ?? "Shreyansh Rai"} — Criminal Lawyer at High Court Lucknow`}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover object-top"
+              />
+              <div className="absolute inset-x-0 bottom-0 flex items-center gap-3 p-4">
+                <div className="rounded-md bg-white/90 px-3 py-2">
+                  <p className="font-serif text-sm text-text-primary leading-none">
+                    {about.fullName ?? "Shreyansh Rai"}
+                  </p>
+                  <p className="mt-1 font-sans text-xs text-text-muted leading-none">
+                    {designation}
+                  </p>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Bio */}

@@ -10,7 +10,7 @@ const singletons = ["about", "contact"] as const;
 
 export default defineConfig({
   name: "shreyansh-rai-studio",
-  title: "Shreyansh Rai — Content Studio",
+  title: "Shreyansh Rai — Admin Dashboard",
   basePath: "/studio",
   projectId: projectId || "placeholder",
   dataset,

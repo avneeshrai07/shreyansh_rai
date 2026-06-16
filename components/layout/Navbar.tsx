@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { useContent } from "@/lib/content";
@@ -28,20 +29,26 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm border-b border-slate-100">
       <div className="w-full max-w-5xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20 overflow-visible">
           {/* Logo */}
           <Link
-            href="/"
-            className="flex items-center gap-2 min-h-[44px]"
-            onClick={() => setIsOpen(false)}
-          >
-            <span className="font-serif text-xl font-bold text-brand-gold">
-              SR
-            </span>
-            <span className="font-sans text-sm text-text-secondary leading-tight">
-              Shreyansh Rai
-            </span>
-          </Link>
+          href="/"
+          className="flex items-center gap-2.5"
+          onClick={() => setIsOpen(false)}
+        >
+          <div className="relative w-28 h-28 flex-shrink-0 -my-4 mt-7">
+            <Image
+              src="/favicon.ico"
+              alt="Shreyansh Rai logo"
+              fill
+              className="object-contain mix-blend-multiply"
+              priority
+            />
+          </div>
+          <span className="font-serif text-base font-semibold text-text-primary tracking-wide">
+            Shreyansh Rai
+          </span>
+        </Link>
 
           {/* Desktop nav */}
           <nav

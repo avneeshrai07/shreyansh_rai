@@ -1,0 +1,115 @@
+// Prisma schema for the Shreyansh Rai site CMS.
+//
+// Datasource: PostgreSQL (recommended: Neon serverless Postgres).
+//   - DATABASE_URL -> single connection used for both `prisma migrate` and the
+//                     app at runtime. Use the direct (non-pooled) Neon string
+//                     so migrations work without a separate directUrl.
+//
+// After editing this file: `npm run db:migrate` (dev) creates/updates tables.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Admin auth: database-backed sessions. The cookie holds the random `token`;
+// validity is checked by looking the row up here (revocable, no env secret).
+// ---------------------------------------------------------------------------
+
+model Session {
+  token     String   @id
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+// ---------------------------------------------------------------------------
+// Singletons: exactly one row each (the About page and the Contact page).
+// We pin a fixed primary key so upserts always target the same row.
+// ---------------------------------------------------------------------------
+
+model About {
+  id                  String   @id @default("about")
+  fullName            String
+  designationEn       String
+  designationHi       String?
+  courtEn             String
+  courtHi             String?
+  taglineEn           String?
+  taglineHi           String?
+  photoUrl            String? // public URL to the profile photo (optional)
+  bioEn               String[] // one entry per paragraph
+  bioHi               String[]
+  education           Json     @default("[]") // EducationItem[] (see lib/content/types.ts)
+  barEnrollmentNumber String?
+  enrolledSinceYear   String?
+  highlightsEn        String[]
+  highlightsHi        String[]
+  linkedinUrl         String?
+  instagramUrl        String?
+  updatedAt           DateTime @updatedAt
+}
+
+model Contact {
+  id                 String   @id @default("contact")
+  headingEn          String?
+  headingHi          String?
+  subheadingEn       String?
+  subheadingHi       String?
+  phone              String?
+  whatsapp           String?
+  email              String?
+  officeAddressEn    String?
+  officeAddressHi    String?
+  officeHoursEn      String?
+  officeHoursHi      String?
+  googleMapsEmbedUrl String?
+  updatedAt          DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Collections: many rows, managed (create/edit/delete) from the admin CMS.
+// ---------------------------------------------------------------------------
+
+model CaseResult {
+  id          String   @id @default(cuid())
+  titleEn     String
+  titleHi     String?
+  outcome     String
+  court       String
+  year        Int
+  category    String?
+  summaryEn   String
+  summaryHi   String?
+  isHighlight Boolean  @default(false)
+  sortOrder   Int      @default(0) // manual ordering in the admin
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isHighlight])
+  @@index([year])
+}
+
+model Testimonial {
+  id           String   @id @default(cuid())
+  clientName   String
+  clientRoleEn String?
+  clientRoleHi String?
+  quoteEn      String
+  quoteHi      String?
+  rating       Int?     @default(5)
+  caseType     String?
+  isHighlight  Boolean  @default(false)
+  publishedAt  DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([isHighlight])
+  @@index([publishedAt])
+}
