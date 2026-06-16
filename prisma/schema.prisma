@@ -1,9 +1,10 @@
 // Prisma schema for the Shreyansh Rai site CMS.
 //
 // Datasource: PostgreSQL (recommended: Neon serverless Postgres).
-//   - DATABASE_URL -> single connection used for both `prisma migrate` and the
-//                     app at runtime. Use the direct (non-pooled) Neon string
-//                     so migrations work without a separate directUrl.
+//   DATABASE_URL is the single connection string in .env — the DIRECT
+//   (non-pooled) Neon endpoint. The Prisma CLI (migrate/introspect) uses it
+//   directly. At runtime, lib/prisma.ts derives the pooled endpoint from it so
+//   the app gets connection pooling without a second env var.
 //
 // After editing this file: `npm run db:migrate` (dev) creates/updates tables.
 

@@ -41,6 +41,7 @@ export function Navbar() {
               src="/favicon.ico"
               alt="Shreyansh Rai logo"
               fill
+              sizes="112px"
               className="object-contain mix-blend-multiply"
               priority
             />
