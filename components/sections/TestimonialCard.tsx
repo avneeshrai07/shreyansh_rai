@@ -1,7 +1,7 @@
 "use client";
 
 import { useLang } from "@/context/LanguageContext";
-import type { Testimonial } from "@/lib/sanity/queries";
+import type { Testimonial } from "@/lib/content/types";
 
 function initials(name: string) {
   return name

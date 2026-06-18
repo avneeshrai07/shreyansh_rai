@@ -97,6 +97,19 @@ model CaseResult {
   @@index([year])
 }
 
+model Stat {
+  id        String   @id @default(cuid())
+  valueEn   String // e.g. "200+", "4+"
+  valueHi   String? // Hindi value (optional; falls back to valueEn)
+  labelEn   String // e.g. "Cases Handled", "Years of Practice"
+  labelHi   String? // Hindi label (optional; falls back to labelEn)
+  sortOrder Int      @default(0) // manual ordering in the admin / stats strip
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
 model Testimonial {
   id           String   @id @default(cuid())
   clientName   String

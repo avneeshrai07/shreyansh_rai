@@ -6,7 +6,7 @@ import { useContent } from "@/lib/content";
 import { telHref, whatsappHref } from "@/lib/site";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/sections/ContactForm";
-import type { ContactData } from "@/lib/sanity/queries";
+import type { ContactData } from "@/lib/content/types";
 
 export function ContactView({ contact }: { contact: ContactData }) {
   const { lang } = useLang();

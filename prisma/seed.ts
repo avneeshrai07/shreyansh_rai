@@ -130,6 +130,35 @@ async function main() {
     });
   }
 
+  // --- Stats (only seed when empty) ---
+  if ((await prisma.stat.count()) === 0) {
+    await prisma.stat.createMany({
+      data: [
+        {
+          valueEn: "200+",
+          valueHi: "200+",
+          labelEn: "Cases Handled",
+          labelHi: "मामले संभाले",
+          sortOrder: 0,
+        },
+        {
+          valueEn: "4+",
+          valueHi: "4+",
+          labelEn: "Years of Practice",
+          labelHi: "वर्षों का अनुभव",
+          sortOrder: 1,
+        },
+        {
+          valueEn: "High Court & Session Court",
+          valueHi: "उच्च न्यायालय और सत्र न्यायालय",
+          labelEn: "Primary Court",
+          labelHi: "मुख्य न्यायालय",
+          sortOrder: 2,
+        },
+      ],
+    });
+  }
+
   // --- Testimonials (only seed when empty) ---
   if ((await prisma.testimonial.count()) === 0) {
     await prisma.testimonial.createMany({

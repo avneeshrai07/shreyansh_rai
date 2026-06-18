@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useContent } from "@/lib/content";
 import { PageHero } from "@/components/ui/PageHero";
 import { CaseCard } from "@/components/sections/CaseCard";
-import type { CaseResult } from "@/lib/sanity/queries";
+import type { CaseResult } from "@/lib/content/types";
 
 const ALL = "__all__";
 
@@ -124,7 +124,7 @@ export function CaseResultsView({ cases }: { cases: CaseResult[] }) {
           {filtered.length > 0 ? (
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {filtered.map((item) => (
-                <CaseCard key={item._id} data={item} />
+                <CaseCard key={item.id} data={item} />
               ))}
             </div>
           ) : (

@@ -1,11 +1,4 @@
-import { sanityFetch } from "@/lib/sanity/client";
-import {
-  HOME_CASES_QUERY,
-  HOME_TESTIMONIALS_QUERY,
-  type CaseResult,
-  type Testimonial,
-} from "@/lib/sanity/queries";
-import { dummyCases, dummyTestimonials } from "@/lib/sanity/dummy";
+import { getHomeCases, getHomeTestimonials, getStats } from "@/lib/content/db";
 import { site } from "@/lib/site";
 import { Hero } from "@/components/sections/Hero";
 import { StatsStrip } from "@/components/sections/StatsStrip";
@@ -84,9 +77,10 @@ const legalServiceSchema = {
 };
 
 export default async function Home() {
-  const [cases, testimonials] = await Promise.all([
-    sanityFetch<CaseResult[]>(HOME_CASES_QUERY, dummyCases),
-    sanityFetch<Testimonial[]>(HOME_TESTIMONIALS_QUERY, dummyTestimonials),
+  const [cases, testimonials, stats] = await Promise.all([
+    getHomeCases(),
+    getHomeTestimonials(),
+    getStats(),
   ]);
 
   return (
@@ -112,7 +106,7 @@ export default async function Home() {
         </h1>
 
         <Hero />
-        <StatsStrip />
+        <StatsStrip stats={stats} />
         <HomePracticeSnippet />
         <HomeCasesSnippet cases={cases} />
         <HomeTestimonialsSnippet testimonials={testimonials} />

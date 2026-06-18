@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useContent } from "@/lib/content";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CaseCard } from "@/components/sections/CaseCard";
-import type { CaseResult } from "@/lib/sanity/queries";
+import type { CaseResult } from "@/lib/content/types";
 
 export function HomeCasesSnippet({ cases }: { cases: CaseResult[] }) {
   const c = useContent();
@@ -25,7 +25,7 @@ export function HomeCasesSnippet({ cases }: { cases: CaseResult[] }) {
         {cases.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {cases.map((item) => (
-              <CaseCard key={item._id} data={item} />
+              <CaseCard key={item.id} data={item} />
             ))}
           </div>
         ) : (

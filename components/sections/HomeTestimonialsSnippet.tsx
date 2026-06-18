@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { useContent } from "@/lib/content";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { TestimonialCard } from "@/components/sections/TestimonialCard";
-import type { Testimonial } from "@/lib/sanity/queries";
+import type { Testimonial } from "@/lib/content/types";
 
 export function HomeTestimonialsSnippet({
   testimonials,
@@ -28,7 +28,7 @@ export function HomeTestimonialsSnippet({
       {testimonials.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {testimonials.map((item) => (
-            <TestimonialCard key={item._id} data={item} />
+            <TestimonialCard key={item.id} data={item} />
           ))}
         </div>
       ) : (

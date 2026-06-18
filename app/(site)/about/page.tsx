@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity/client";
-import { ABOUT_QUERY, type AboutData } from "@/lib/sanity/queries";
-import { dummyAbout } from "@/lib/sanity/dummy";
+import { getAbout } from "@/lib/content/db";
 import { AboutView } from "./AboutView";
 
 export const revalidate = 3600;
@@ -15,6 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const about = await sanityFetch<AboutData>(ABOUT_QUERY, dummyAbout);
-  return <AboutView about={about ?? dummyAbout} />;
+  const about = await getAbout();
+  return <AboutView about={about ?? {}} />;
 }

@@ -2,7 +2,7 @@
 
 import { useLang } from "@/context/LanguageContext";
 import { cn } from "@/lib/utils";
-import type { CaseResult } from "@/lib/sanity/queries";
+import type { CaseResult } from "@/lib/content/types";
 
 // Outcome badge colours (HARD_FOCUS_RULES T8).
 const outcomeBadgeClasses: Record<string, string> = {

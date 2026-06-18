@@ -49,6 +49,14 @@ export type ContactData = {
   googleMapsEmbedUrl?: string;
 };
 
+export type Stat = {
+  id: string;
+  valueEn: string;
+  valueHi?: string;
+  labelEn: string;
+  labelHi?: string;
+};
+
 export type CaseResult = {
   id: string;
   titleEn: string;

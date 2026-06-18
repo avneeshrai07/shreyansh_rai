@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity/client";
-import { CONTACT_QUERY, type ContactData } from "@/lib/sanity/queries";
-import { dummyContact } from "@/lib/sanity/dummy";
+import { getContact } from "@/lib/content/db";
 import { ContactView } from "./ContactView";
 
 export const revalidate = 3600;
@@ -15,6 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const contact = await sanityFetch<ContactData>(CONTACT_QUERY, dummyContact);
-  return <ContactView contact={contact ?? dummyContact} />;
+  const contact = await getContact();
+  return <ContactView contact={contact ?? {}} />;
 }

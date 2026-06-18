@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { sanityFetch } from "@/lib/sanity/client";
-import { ALL_CASES_QUERY, type CaseResult } from "@/lib/sanity/queries";
-import { dummyCases } from "@/lib/sanity/dummy";
+import { getAllCases } from "@/lib/content/db";
 import { CaseResultsView } from "./CaseResultsView";
 
 export const revalidate = 3600;
@@ -15,6 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default async function CaseResultsPage() {
-  const cases = await sanityFetch<CaseResult[]>(ALL_CASES_QUERY, dummyCases);
-  return <CaseResultsView cases={cases?.length ? cases : dummyCases} />;
+  const cases = await getAllCases();
+  return <CaseResultsView cases={cases} />;
 }

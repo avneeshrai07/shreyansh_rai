@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContent } from "@/lib/content";
 import { PageHero } from "@/components/ui/PageHero";
 import { TestimonialCard } from "@/components/sections/TestimonialCard";
-import type { Testimonial } from "@/lib/sanity/queries";
+import type { Testimonial } from "@/lib/content/types";
 
 export function TestimonialsView({
   testimonials,
@@ -33,7 +33,7 @@ export function TestimonialsView({
           {testimonials.length > 0 ? (
             <div className="columns-1 md:columns-2 gap-6">
               {testimonials.map((item) => (
-                <TestimonialCard key={item._id} data={item} />
+                <TestimonialCard key={item.id} data={item} />
               ))}
             </div>
           ) : (

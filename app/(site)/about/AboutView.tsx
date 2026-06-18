@@ -2,13 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PortableText } from "@portabletext/react";
 import { Check } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { useContent } from "@/lib/content";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import type { AboutData } from "@/lib/sanity/queries";
+import type { AboutData } from "@/lib/content/types";
 
 export function AboutView({ about }: { about: AboutData }) {
   const { lang } = useLang();
@@ -46,7 +45,7 @@ export function AboutView({ about }: { about: AboutData }) {
             {/* Photo */}
             <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-slate-200">
               <Image
-                src="/shreyansh_rai_image.png"
+                src={about.photoUrl || "/shreyansh_rai_image.png"}
                 alt={`Advocate ${about.fullName ?? "Shreyansh Rai"} — Criminal Lawyer at High Court Lucknow`}
                 fill
                 priority
@@ -77,10 +76,12 @@ export function AboutView({ about }: { about: AboutData }) {
                 {designation} — {court}
               </p>
 
-              <div className="mt-5 space-y-4 font-sans text-base text-text-secondary leading-relaxed [&_p]:mb-4">
-                {bio && bio.length > 0 ? (
-                  <PortableText value={bio} />
-                ) : null}
+              <div className="mt-5 space-y-4 font-sans text-base text-text-secondary leading-relaxed">
+                {bio?.map((paragraph, i) => (
+                  <p key={i} className="whitespace-pre-line">
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
           </div>
