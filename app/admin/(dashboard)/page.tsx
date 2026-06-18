@@ -2,6 +2,7 @@ import Link from "next/link";
 import {
   BarChart3,
   FileText,
+  Inbox,
   MessageSquareQuote,
   Scale,
   User,
@@ -9,11 +10,13 @@ import {
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminDashboardPage() {
-  const [caseCount, testimonialCount, statCount] = await Promise.all([
-    prisma.caseResult.count(),
-    prisma.testimonial.count(),
-    prisma.stat.count(),
-  ]);
+  const [caseCount, testimonialCount, statCount, unreadInquiryCount] =
+    await Promise.all([
+      prisma.caseResult.count(),
+      prisma.testimonial.count(),
+      prisma.stat.count(),
+      prisma.inquiry.count({ where: { isRead: false } }),
+    ]);
 
   const sections = [
     {
@@ -50,6 +53,14 @@ export default async function AdminDashboardPage() {
       meta: `${testimonialCount} ${testimonialCount === 1 ? "entry" : "entries"}`,
       icon: MessageSquareQuote,
       href: "/admin/testimonials",
+    },
+    {
+      title: "Inquiries",
+      description: "Messages submitted through the contact form.",
+      meta:
+        unreadInquiryCount > 0 ? `${unreadInquiryCount} new` : "No new messages",
+      icon: Inbox,
+      href: "/admin/inquiries",
     },
   ];
 

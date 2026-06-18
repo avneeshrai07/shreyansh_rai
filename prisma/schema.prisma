@@ -127,3 +127,23 @@ model Testimonial {
   @@index([isHighlight])
   @@index([publishedAt])
 }
+
+// ---------------------------------------------------------------------------
+// Inquiries: contact-form submissions. Stored here so leads aren't lost; the
+// admin reads them in the dashboard inbox and marks/deletes them.
+// ---------------------------------------------------------------------------
+
+model Inquiry {
+  id          String   @id @default(cuid())
+  name        String
+  phone       String
+  email       String?
+  matter      String // selected matter type (e.g. "Bail Matter")
+  description String
+  preferred   String   @default("en") // preferred language: "en" | "hi"
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@index([isRead])
+  @@index([createdAt])
+}

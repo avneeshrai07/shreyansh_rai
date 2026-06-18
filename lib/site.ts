@@ -1,6 +1,7 @@
 /**
- * Site-wide constants. Phone/email are placeholders until the real values are
- * entered in Sanity (Contact singleton) — update here for the footer + JSON-LD.
+ * Site-wide constants. Phone/email/whatsapp are fallback placeholders used only
+ * when the CMS Contact record leaves them blank — the footer and home-page
+ * JSON-LD prefer the CMS values (see lib/content/db.ts → getContact).
  */
 export const site = {
   baseUrl: "https://shreyanshrai.com",

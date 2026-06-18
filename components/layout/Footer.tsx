@@ -24,8 +24,19 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-export function Footer() {
+type FooterContact = {
+  phone?: string;
+  email?: string;
+  whatsapp?: string;
+};
+
+export function Footer({ contact }: { contact?: FooterContact }) {
   const c = useContent();
+
+  // Prefer CMS-managed contact details; fall back to the site constants.
+  const phone = contact?.phone || site.phone;
+  const email = contact?.email || site.email;
+  const whatsapp = contact?.whatsapp || site.whatsapp;
 
   const navLinks = [
     { href: "/about", label: c.nav.about },
@@ -101,25 +112,25 @@ export function Footer() {
             <ul className="mt-4 space-y-2">
               <li>
                 <a
-                  href={telHref(site.phone)}
+                  href={telHref(phone)}
                   className="inline-flex items-center gap-2 min-h-[44px] font-sans text-sm text-text-secondary hover:text-brand-gold transition-colors"
                 >
                   <Phone className="size-4 text-brand-gold" aria-hidden="true" />
-                  {site.phone}
+                  {phone}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${site.email}`}
+                  href={`mailto:${email}`}
                   className="inline-flex items-center gap-2 min-h-[44px] font-sans text-sm text-text-secondary hover:text-brand-gold transition-colors"
                 >
                   <Mail className="size-4 text-brand-gold" aria-hidden="true" />
-                  {site.email}
+                  {email}
                 </a>
               </li>
               <li>
                 <a
-                  href={whatsappHref(site.whatsapp, c.contact.whatsappMessage)}
+                  href={whatsappHref(whatsapp, c.contact.whatsappMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 min-h-[44px] font-sans text-sm text-text-secondary hover:text-brand-gold transition-colors"
@@ -128,7 +139,7 @@ export function Footer() {
                     className="size-4 text-brand-gold"
                     aria-hidden="true"
                   />
-                  {c.contact.whatsapp}
+                  {whatsapp}
                 </a>
               </li>
             </ul>

@@ -23,6 +23,11 @@ export function AboutView({ about }: { about: AboutData }) {
     ? about.highlightsHi ?? about.highlightsEn
     : about.highlightsEn;
 
+  const photoSrc = about.photoUrl || "/shreyansh_rai_image.png";
+  // External hosts aren't in next.config's image allowlist, so skip the
+  // optimizer for absolute URLs (relative /public paths optimize normally).
+  const photoIsExternal = /^https?:\/\//.test(photoSrc);
+
   return (
     <main id="main-content">
       <article>
@@ -45,10 +50,11 @@ export function AboutView({ about }: { about: AboutData }) {
             {/* Photo */}
             <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-slate-200">
               <Image
-                src={about.photoUrl || "/shreyansh_rai_image.png"}
+                src={photoSrc}
                 alt={`Advocate ${about.fullName ?? "Shreyansh Rai"} — Criminal Lawyer at High Court Lucknow`}
                 fill
                 priority
+                unoptimized={photoIsExternal}
                 sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover object-top"
               />

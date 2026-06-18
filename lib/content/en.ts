@@ -172,6 +172,9 @@ export const en = {
     langEnglish: "English",
     langHindi: "Hindi",
     submit: "Send Message",
+    submitting: "Sending…",
+    errorRequired:
+      "Please fill in your name, phone number, matter type, and a brief description.",
     success: "Thank you. We will contact you within 24 hours.",
     legalNote: "This form does not create an attorney-client relationship.",
     mapHeading: "Find the Office",

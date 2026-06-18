@@ -1,11 +1,14 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { getContact } from "@/lib/content/db";
 
 // Chrome for the public-facing site only. The /admin area lives outside this
 // route group, so it does not render the public navbar/footer.
-export default function SiteLayout({
+export default async function SiteLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const contact = await getContact();
+
   return (
     <>
       <a
@@ -16,7 +19,13 @@ export default function SiteLayout({
       </a>
       <Navbar />
       <div className="flex-1">{children}</div>
-      <Footer />
+      <Footer
+        contact={{
+          phone: contact?.phone,
+          email: contact?.email,
+          whatsapp: contact?.whatsapp,
+        }}
+      />
     </>
   );
 }

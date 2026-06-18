@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import type {
   AboutData,
@@ -45,7 +46,7 @@ export async function getAbout(): Promise<AboutData | null> {
 
 // --- Contact (singleton) ----------------------------------------------------
 
-export async function getContact(): Promise<ContactData | null> {
+export const getContact = cache(async (): Promise<ContactData | null> => {
   const c = await prisma.contact.findUnique({ where: { id: "contact" } });
   if (!c) return null;
 
@@ -63,7 +64,7 @@ export async function getContact(): Promise<ContactData | null> {
     officeHoursHi: c.officeHoursHi ?? undefined,
     googleMapsEmbedUrl: c.googleMapsEmbedUrl ?? undefined,
   };
-}
+});
 
 // --- Case results (collection) ----------------------------------------------
 

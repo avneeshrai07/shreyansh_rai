@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { useContent } from "@/lib/content";
+import { submitInquiry, type InquiryState } from "@/app/(site)/contact/actions";
 
 const inputClasses =
   "w-full text-base font-sans border border-slate-200 rounded-lg px-4 py-3 min-h-[48px] focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-transparent placeholder:text-text-muted";
@@ -10,33 +11,16 @@ const inputClasses =
 const labelClasses =
   "block mb-1 font-sans text-sm font-medium text-text-primary";
 
+const initialState: InquiryState = {};
+
 export function ContactForm() {
   const c = useContent();
+  const [state, formAction, pending] = useActionState(
+    submitInquiry,
+    initialState,
+  );
 
-  const [values, setValues] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    matter: "",
-    description: "",
-    preferred: "en",
-  });
-  const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
-
-  const set = (key: keyof typeof values, v: string) =>
-    setValues((prev) => ({ ...prev, [key]: v }));
-
-  const handleSubmit = () => {
-    if (!values.name || !values.phone || !values.matter || !values.description) {
-      setError(true);
-      return;
-    }
-    setError(false);
-    setSubmitted(true);
-  };
-
-  if (submitted) {
+  if (state.ok) {
     return (
       <div className="flex items-start gap-3 bg-brand-gold-faint border border-amber-200 rounded-lg p-5">
         <CheckCircle2
@@ -54,7 +38,7 @@ export function ContactForm() {
   }
 
   return (
-    <div>
+    <form action={formAction}>
       <h2 className="font-serif text-xl font-medium text-text-primary">
         {c.contact.formHeading}
       </h2>
@@ -66,10 +50,10 @@ export function ContactForm() {
           </label>
           <input
             id="cf-name"
+            name="name"
             type="text"
             autoComplete="name"
-            value={values.name}
-            onChange={(e) => set("name", e.target.value)}
+            required
             className={inputClasses}
           />
         </div>
@@ -80,10 +64,10 @@ export function ContactForm() {
           </label>
           <input
             id="cf-phone"
+            name="phone"
             type="tel"
             autoComplete="tel"
-            value={values.phone}
-            onChange={(e) => set("phone", e.target.value)}
+            required
             className={inputClasses}
           />
         </div>
@@ -94,10 +78,9 @@ export function ContactForm() {
           </label>
           <input
             id="cf-email"
+            name="email"
             type="email"
             autoComplete="email"
-            value={values.email}
-            onChange={(e) => set("email", e.target.value)}
             className={inputClasses}
           />
         </div>
@@ -108,8 +91,9 @@ export function ContactForm() {
           </label>
           <select
             id="cf-matter"
-            value={values.matter}
-            onChange={(e) => set("matter", e.target.value)}
+            name="matter"
+            required
+            defaultValue=""
             className={`${inputClasses} bg-white`}
           >
             <option value="">—</option>
@@ -127,9 +111,9 @@ export function ContactForm() {
           </label>
           <textarea
             id="cf-desc"
+            name="description"
             rows={4}
-            value={values.description}
-            onChange={(e) => set("description", e.target.value)}
+            required
             className={`${inputClasses} resize-none`}
           />
         </div>
@@ -142,10 +126,9 @@ export function ContactForm() {
             <label className="inline-flex items-center gap-2 min-h-[44px] font-sans text-base text-text-secondary">
               <input
                 type="radio"
-                name="cf-lang"
+                name="preferred"
                 value="en"
-                checked={values.preferred === "en"}
-                onChange={(e) => set("preferred", e.target.value)}
+                defaultChecked
                 className="size-4 accent-brand-gold"
               />
               {c.contact.langEnglish}
@@ -153,10 +136,8 @@ export function ContactForm() {
             <label className="inline-flex items-center gap-2 min-h-[44px] font-sans text-base text-text-secondary">
               <input
                 type="radio"
-                name="cf-lang"
+                name="preferred"
                 value="hi"
-                checked={values.preferred === "hi"}
-                onChange={(e) => set("preferred", e.target.value)}
                 className="size-4 accent-brand-gold"
               />
               {c.contact.langHindi}
@@ -164,25 +145,24 @@ export function ContactForm() {
           </div>
         </fieldset>
 
-        {error ? (
+        {state.error ? (
           <p role="alert" className="font-sans text-sm text-red-600">
-            {c.contact.fullName}, {c.contact.phoneNumber},{" "}
-            {c.contact.matterType} &amp; {c.contact.description}.
+            {c.contact.errorRequired}
           </p>
         ) : null}
 
         <button
-          type="button"
-          onClick={handleSubmit}
-          className="flex items-center justify-center w-full min-h-[52px] px-6 py-3 bg-brand-gold text-white font-sans font-medium text-base rounded-lg hover:bg-brand-gold-light transition-colors duration-200"
+          type="submit"
+          disabled={pending}
+          className="flex items-center justify-center w-full min-h-[52px] px-6 py-3 bg-brand-gold text-white font-sans font-medium text-base rounded-lg hover:bg-brand-gold-light transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {c.contact.submit}
+          {pending ? c.contact.submitting : c.contact.submit}
         </button>
 
         <p className="font-sans text-xs text-text-muted">
           {c.contact.legalNote}
         </p>
       </div>
-    </div>
+    </form>
   );
 }

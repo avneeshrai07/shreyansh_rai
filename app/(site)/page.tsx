@@ -1,4 +1,9 @@
-import { getHomeCases, getHomeTestimonials, getStats } from "@/lib/content/db";
+import {
+  getContact,
+  getHomeCases,
+  getHomeTestimonials,
+  getStats,
+} from "@/lib/content/db";
 import { site } from "@/lib/site";
 import { Hero } from "@/components/sections/Hero";
 import { StatsStrip } from "@/components/sections/StatsStrip";
@@ -77,11 +82,18 @@ const legalServiceSchema = {
 };
 
 export default async function Home() {
-  const [cases, testimonials, stats] = await Promise.all([
+  const [cases, testimonials, stats, contact] = await Promise.all([
     getHomeCases(),
     getHomeTestimonials(),
     getStats(),
+    getContact(),
   ]);
+
+  // Publish the CMS phone in structured data (falls back to the site constant).
+  const legalServiceSchemaWithContact = {
+    ...legalServiceSchema,
+    telephone: contact?.phone || site.phone,
+  };
 
   return (
     <>
@@ -94,7 +106,10 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(legalServiceSchema).replace(/</g, "\\u003c"),
+          __html: JSON.stringify(legalServiceSchemaWithContact).replace(
+            /</g,
+            "\\u003c",
+          ),
         }}
       />
 
